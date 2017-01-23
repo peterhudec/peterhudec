@@ -1,0 +1,28 @@
+{
+  "name": "peterhudec-website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "3d.js",
+  "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -c --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "css3drenderer": "0.0.0",
+    "rollup": "^0.41.4"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.20.2",
+    "babel-preset-es2015-rollup": "^3.0.0",
+    "jquery": "^3.1.1",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-commonjs": "^7.0.0",
+    "rollup-plugin-filesize": "^1.0.1",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-plugin-uglify": "^1.0.1",
+    "rollup-plugin-visualizer": "^0.2.0",
+    "rollup-watch": "^3.2.2"
+  }
+}
