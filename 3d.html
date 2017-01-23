@@ -50,9 +50,23 @@
         right: 0;
         /*background-color: red;*/
       }
+
+      #debug {
+        position: fixed;
+        z-index: 1000;
+        color: red;
+      }
     </style>
   </head>
   <body>
+    <!-- <div id="debug">
+      <pre><code>beta: <span id="beta"></span></code></pre>
+      <pre><code>gamma: <span id="gamma"></span></code></pre>
+      <pre><code>x: <span id="mouse-x"></span></code></pre>
+      <pre><code>y: <span id="mouse-y"></span></code></h1>
+      <pre><code>motion: <span id="motion"></span></code></h1>
+    </div> -->
+
     <div id="css-viewport"></div>
     <div id="viewport"></div>
     <div id="content">
@@ -90,9 +104,7 @@
     <!-- <script src="3d.js" charset="utf-8"></script> -->
     <script src="build/bundle.js" charset="utf-8"></script>
 
-    <div style="height: 2000px">
-      blah
-    </div>
+    <div style="height: 1200px"></div>
 
   </body>
 </html>

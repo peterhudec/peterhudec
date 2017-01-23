@@ -26,7 +26,6 @@ var cssRenderer = new THREE.CSS3DRenderer({
   antialias: true
 })
 cssRenderer.setSize(window.innerWidth, window.innerHeight)
-// cssRenderer.setClearColor(0xffffff, 1)
 
 document.getElementById('viewport').appendChild(renderer.domElement)
 document.getElementById('css-viewport').appendChild(cssRenderer.domElement)
@@ -124,15 +123,15 @@ var fontFactor = 2
 var objectScale = cubeSize * 0.1 / fontFactor
 object.scale.set(objectScale, objectScale, objectScale)
 
-object.position.y = -12 * cubeSize
-object.position.z = -12 * cubeSize
+object.position.y = -26 * cubeSize
+object.position.z = -10 * cubeSize
 object.rotation.x = Math.PI / 2
 
 
 backface.scale.set(objectScale, objectScale, objectScale)
 
-backface.position.y = -12 * cubeSize + 0.01
-backface.position.z = -12 * cubeSize
+backface.position.y = -26 * cubeSize + 0.01
+backface.position.z = -10 * cubeSize
 backface.rotation.x = Math.PI / 2
 window.backface = backface
 
@@ -144,7 +143,7 @@ group.add(backface)
 
 
 /**
-* Hyperbole passing through (n, m) with slope (s) and asymptote (a)
+* Hyperbole passing through (n, m) with slope (c) and asymptote (a)
 */
 function hyperbole (n, m, c, a) {
   return function (x) {
@@ -154,14 +153,11 @@ function hyperbole (n, m, c, a) {
 
 var scrollRotation = 0
 var scrollPosition = 0
-var mouse2D = new THREE.Vector2()
-
-function onDocumentMouseMove(e) {
-  mouse2D.x = ( e.screenX / window.innerWidth ) * 2 - 1;
-  mouse2D.y = - ( e.screenY / window.innerHeight ) * 2 + 1;
-}
+var mouseX = 0
+var mouseY = 0
 
 function render() {
+  // http://jsfiddle.net/DLta8/143/
   var newGroupPosition = group.position.clone()
   newGroupPosition.y = scrollPosition
   group.position.lerp(newGroupPosition, 0.07)
@@ -179,8 +175,8 @@ function render() {
   const cameraRotationFactor = 0.3
   const cameraDirection = -1
 
-  const cameraRotationX = mouse2D.y * cameraRotationFactor * cameraDirection
-  const cameraRotationY = mouse2D.x * cameraRotationFactor * -cameraDirection
+  const cameraRotationX = mouseY * cameraRotationFactor * cameraDirection
+  const cameraRotationY = mouseX * cameraRotationFactor * -cameraDirection
 
   const cameraQuaternion = new THREE.Quaternion()
     .setFromEuler(new THREE.Euler(cameraRotationX, cameraRotationY, 0, 'XYZ'))
@@ -199,31 +195,37 @@ animate()
 
 registerEvents()
 
+const rotationFunction = hyperbole(0, 0, 10, Math.PI / (2 - 0.3))
 
 function registerEvents () {
-  const rotationFunction = hyperbole(0, 0, 10, Math.PI / (2 - 0.3) )
-
-  document.onscroll = function (event) {
-    const scrollTop = document.body.scrollTop
-      | document.documentElement.scrollTop
-
-    scrollRotation = - rotationFunction(scrollTop / 10)
-    scrollPosition = scrollTop * 0.01
-  }
 
   $(window).on('resize', e => {
-    const width = $(window).width()
-    const height = $(window).height()
+      const width = $(window).width()
+      const height = $(window).height()
 
-    camera.aspect = width / height
-    camera.updateProjectionMatrix()
+      camera.aspect = width / height
+      camera.updateProjectionMatrix()
 
-    renderer.setSize(width, height)
-    cssRenderer.setSize(width, height)
+      renderer.setSize(width, height)
+      cssRenderer.setSize(width, height)
 
-    renderer.render(scene, camera)
-    cssRenderer.render(scene, camera)
+      renderer.render(scene, camera)
+      cssRenderer.render(scene, camera)
+
+    })
+  .on('scroll', () => {
+      const scrollTop = document.body.scrollTop
+        | document.documentElement.scrollTop
+
+      scrollRotation = - rotationFunction(scrollTop / 10)
+      scrollPosition = scrollTop * 0.01
+    })
+  .on('mousemove', e => {
+    mouseX = e.screenX / window.innerWidth * 2 - 1;
+    mouseY = - e.screenY / window.innerHeight * 2 + 1;
+  }).on('deviceorientation', e => {
+    const initialPitch = 30
+    mouseY = (e.originalEvent.beta - initialPitch) / -180 * 16
+    mouseX = e.originalEvent.gamma / 90 * 8
   })
-
-  document.addEventListener('mousemove', onDocumentMouseMove, false)
 }
