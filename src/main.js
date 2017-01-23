@@ -7,16 +7,13 @@ var camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 )
+var cameraGroup = new THREE.Group()
+scene.add(cameraGroup)
+
+cameraGroup.add(camera)
+cameraGroup.position.set(0, 0, 0)
 camera.position.z = 10
-// var orthoFactor = 512
-// var camera = new THREE.OrthographicCamera(
-//   window.innerWidth / - orthoFactor,
-//   window.innerWidth / orthoFactor,
-//   window.innerHeight / orthoFactor,
-//   window.innerHeight / - orthoFactor,
-//   0.1,
-//   1000
-// )
+
 
 var renderer = new THREE.WebGLRenderer({
   antialias: true,
@@ -142,18 +139,6 @@ group.add(backface)
 ////////////////////////////////////
 
 
-
-
-function render() {
-	requestAnimationFrame(render)
-  group.rotation.x += 0.01
-  group.rotation.y += 0.01
-
-	renderer.render(scene, camera)
-}
-
-// render()
-
 /**
 * Hyperbole passing through (n, m) with slope (s) and asymptote (a)
 */
@@ -163,51 +148,78 @@ function hyperbole (n, m, c, a) {
   }
 }
 
+var scrollRotation = 0
+var scrollPosition = 0
+var mouse2D = new THREE.Vector2()
 
-document.onmousemove = function (event) {
-  // group.rotation.x = (window.innerHeight / 2 - event.pageY) * .007
+function onDocumentMouseMove(e) {
+  mouse2D.x = ( e.screenX / window.innerWidth ) * 2 - 1;
+  mouse2D.y = - ( e.screenY / window.innerHeight ) * 2 + 1;
+}
 
-  camera.position.x = (window.innerWidth / 2 - event.pageX) * -.013
-  camera.rotation.y = (window.innerWidth / 2 - event.pageX) * -.0013
+function render() {
+  var newGroupPosition = group.position.clone()
+  newGroupPosition.y = scrollPosition
+  group.position.lerp(newGroupPosition, 0.07)
 
-  // console.log(group.rotation.x)
+
+  var groupQuarternion = new THREE.Quaternion()
+    .setFromEuler(new THREE.Euler(
+      scrollRotation,
+      0,
+      0,
+      'XYZ'
+    ))
+  group.quaternion.slerp(groupQuarternion, 0.07)
+
+  const cameraRotationFactor = 0.3
+  const cameraDirection = -1
+
+  const cameraRotationX = mouse2D.y * cameraRotationFactor * cameraDirection
+  const cameraRotationY = mouse2D.x * cameraRotationFactor * cameraDirection
+
+  const cameraQuaternion = new THREE.Quaternion()
+    .setFromEuler(new THREE.Euler(cameraRotationX, cameraRotationY, 0, 'XYZ'))
+  cameraGroup.quaternion.slerp(cameraQuaternion, 0.07)
+
   renderer.render(scene, camera)
   cssRenderer.render(scene, camera)
 }
 
-// var startingRotation = Math.PI / 2
-// var startingRotation = Math.PI / 2
-var rotationFunction = hyperbole(0, 0, 10, Math.PI / (2 - 0.3) )
-
-document.onscroll = function (event) {
-  var scrollTop = document.body.scrollTop | document.documentElement.scrollTop
-
-  // var rotation = scrollTop * -.007 + startingRotation
-  var rotation = - rotationFunction(scrollTop / 10)
-  console.log(scrollTop, rotation)
-  group.rotation.x = rotation
-  group.position.y = scrollTop * 0.01
-
-
-  // group.rotation.x = 0
-
-  // camera.position.x = (window.innerWidth / 2 - event.pageX) * -.013
-  // camera.rotation.y = (window.innerWidth / 2 - event.pageX) * -.0013
-
-  renderer.render(scene, camera)
-  cssRenderer.render(scene, camera)
+function animate() {
+  requestAnimationFrame(animate)
+  render()
 }
 
-$(window).on('resize', e => {
-  const width = $(window).width()
-  const height = $(window).height()
+animate()
 
-  camera.aspect = width / height
-  camera.updateProjectionMatrix()
+registerEvents()
 
-  renderer.setSize(width, height)
-  cssRenderer.setSize(width, height)
 
-  renderer.render(scene, camera)
-  cssRenderer.render(scene, camera)
-})
+function registerEvents () {
+  const rotationFunction = hyperbole(0, 0, 10, Math.PI / (2 - 0.3) )
+
+  document.onscroll = function (event) {
+    const scrollTop = document.body.scrollTop
+      | document.documentElement.scrollTop
+
+    scrollRotation = - rotationFunction(scrollTop / 10)
+    scrollPosition = scrollTop * 0.01
+  }
+
+  $(window).on('resize', e => {
+    const width = $(window).width()
+    const height = $(window).height()
+
+    camera.aspect = width / height
+    camera.updateProjectionMatrix()
+
+    renderer.setSize(width, height)
+    cssRenderer.setSize(width, height)
+
+    renderer.render(scene, camera)
+    cssRenderer.render(scene, camera)
+  })
+
+  document.addEventListener('mousemove', onDocumentMouseMove, false)
+}
