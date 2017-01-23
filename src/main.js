@@ -142,7 +142,7 @@ const onResize = () => {
 
 const onScroll = () => {
   const scrollTop = document.body.scrollTop
-    | document.documentElement.scrollTop
+    || document.documentElement.scrollTop
 
   scrollRotation = - rotationFunction(scrollTop / 10)
   scrollPosition = scrollTop * 0.01
@@ -160,8 +160,16 @@ const registerEvents = () => {
   if (window.DeviceOrientationEvent && 'ontouchstart' in window) {
     $window.on('deviceorientation', e => {
       const initialPitch = 30
-      mouseY = (e.originalEvent.beta - initialPitch) / -180 * 16
-      mouseX = e.originalEvent.gamma / 90 * 8
+      const newMouseX = e.originalEvent.gamma / 90 * 8
+      const newMouseY = (e.originalEvent.beta - initialPitch) / -180 * 16
+
+      if (Math.abs(newMouseX) < 1) {
+        mouseX = newMouseX
+      }
+
+      if (Math.abs(newMouseY) < 1) {
+        mouseY = newMouseY
+      }
     })
   }
 }
