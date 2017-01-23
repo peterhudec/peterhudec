@@ -176,7 +176,7 @@ function render() {
   const cameraDirection = -1
 
   const cameraRotationX = mouse2D.y * cameraRotationFactor * cameraDirection
-  const cameraRotationY = mouse2D.x * cameraRotationFactor * cameraDirection
+  const cameraRotationY = mouse2D.x * cameraRotationFactor * -cameraDirection
 
   const cameraQuaternion = new THREE.Quaternion()
     .setFromEuler(new THREE.Euler(cameraRotationX, cameraRotationY, 0, 'XYZ'))
