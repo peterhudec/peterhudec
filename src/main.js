@@ -1,5 +1,7 @@
 import {default as $} from 'jquery'
 
+import * as lights from './lights'
+
 var scene = new THREE.Scene()
 var camera = new THREE.PerspectiveCamera(
   30,
@@ -70,8 +72,6 @@ plane2.rotation.x = Math.PI / 2
 var logo = []
   .concat(shiftCubesBy(0, 3, -3, topNameSlim()))
   .concat(shiftCubesBy(0, -3, 3, bottomNameSlim()))
-  // .concat(shiftCubesBy(0, -3, -3, topName()))
-  // .concat(shiftCubesBy(0, 3, 3, bottomName()))
 
 const logoGroup = new THREE.Group()
 logoGroup.rotation.x = Math.PI / 2
@@ -79,37 +79,9 @@ group.add(logoGroup)
 addCubes(logoGroup, logo, cubeSize)
 
 
-var lightsZ = -1
-var lightsW = 3
-// addLight(0xff0000, 0, 2 * lightsW, lightsZ)
-// addLight(0xffff00, -1.8, 0.8, lightsZ)
-// addLight(0x00ff00, -2, -1.3 * lightsW, lightsZ)
-// addLight(0xff00ff, 1.8, 0.8, lightsZ)
-// addLight(0x0000ff, 2, -1.3 * lightsW, lightsZ)
-// addLight(0x00ffff, 0, -2, lightsZ)
-
-function addLightRing(n, r, z) {
-  for (var i = 0; i < n; i++) {
-    var x = Math.sin((Math.PI * 2) / n * i) * r
-    var y = Math.cos((Math.PI * 2) / n * i) * r
-    addLight(0xffffff, x, y, z)
-  }
-}
-
-addLightRing(7, 5, -3)
-
-function addLight(color, x, y, z) {
-  var light = new THREE.DirectionalLight(color)
-  light.position.set(x, y, z)
-  scene.add(light)
-
-  // var sphere = new THREE.Mesh(
-  //   new THREE.SphereGeometry(0.1, 32, 32),
-  //   new THREE.MeshBasicMaterial({color: 0})
-  // )
-  // sphere.position.set(x, y, z)
-  // scene.add(sphere)
-}
+const lightRing = lights.ring(7, 5, 0xffffff)
+lightRing.position.z = -3
+cameraGroup.add(lightRing)
 
 
 ////////////////////////////////////
