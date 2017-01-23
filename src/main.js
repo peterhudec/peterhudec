@@ -67,13 +67,17 @@ plane2.position.z = (-12 - (planeHeight / 2)) * cubeSize
 plane2.rotation.x = Math.PI / 2
 // group.add(plane2)
 
+
 var logo = []
   .concat(shiftCubesBy(0, 3, -3, topNameSlim()))
   .concat(shiftCubesBy(0, -3, 3, bottomNameSlim()))
   // .concat(shiftCubesBy(0, -3, -3, topName()))
   // .concat(shiftCubesBy(0, 3, 3, bottomName()))
 
-addCubes(group, logo, cubeSize)
+const logoGroup = new THREE.Group()
+logoGroup.rotation.x = Math.PI / 2
+group.add(logoGroup)
+addCubes(logoGroup, logo, cubeSize)
 
 
 var lightsZ = -1
