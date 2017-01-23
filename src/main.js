@@ -2,14 +2,22 @@ import {default as $} from 'jquery'
 
 import * as lights from './lights'
 
-var scene = new THREE.Scene()
-var camera = new THREE.PerspectiveCamera(
+// Global variables
+let scrollRotation = 0
+let scrollPosition = 0
+let mouseX = 0
+let mouseY = 0
+
+const $window = $(window)
+
+const scene = new THREE.Scene()
+const camera = new THREE.PerspectiveCamera(
   30,
-  window.innerWidth / window.innerHeight,
+  $window.width() / $window.height(),
   0.1,
   1000
 )
-var cameraGroup = new THREE.Group()
+const cameraGroup = new THREE.Group()
 scene.add(cameraGroup)
 
 cameraGroup.add(camera)
@@ -17,59 +25,22 @@ cameraGroup.position.set(0, 0, 0)
 camera.position.z = 10
 
 
-var renderer = new THREE.WebGLRenderer({
+const renderer = new THREE.WebGLRenderer({
   antialias: true,
   alpha: true,
 })
-renderer.setSize(window.innerWidth, window.innerHeight)
 renderer.setClearColor(0xffffff, 0)
 
-var cssRenderer = new THREE.CSS3DRenderer({
+const cssRenderer = new THREE.CSS3DRenderer({
   antialias: true
 })
-cssRenderer.setSize(window.innerWidth, window.innerHeight)
 
-document.getElementById('viewport').appendChild(renderer.domElement)
-document.getElementById('css-viewport').appendChild(cssRenderer.domElement)
-
-var geometry = new THREE.CubeGeometry(1, 1, 1)
-var material = new THREE.MeshBasicMaterial({color: 0x222222})
-
-var group = new THREE.Group()
+const group = new THREE.Group()
 scene.add(group)
 
-var cubeSize = 0.1
+const cubeSize = 0.1
 
-var planeHeight = 100
-var plane = new THREE.Mesh(
-  new THREE.BoxGeometry(
-    50 * cubeSize,
-    cubeSize,
-    planeHeight * cubeSize
-  ),
-  new THREE.MeshBasicMaterial({color: 0xff0000})
-)
-plane.position.set(
-  0 * cubeSize,
-  -12 * cubeSize,
-  (-12 - (planeHeight / 2)) * cubeSize
-)
-// group.add(plane)
-
-var plane2 = new THREE.Mesh(
-  // new THREE.PlaneGeometry(50 * cubeSize, planeHeight * cubeSize),
-  new THREE.PlaneGeometry(50 * cubeSize, planeHeight * cubeSize),
-  new THREE.MeshBasicMaterial({
-      color: 0xff0000
-  })
-)
-plane2.position.y = -12 * cubeSize
-plane2.position.z = (-12 - (planeHeight / 2)) * cubeSize
-plane2.rotation.x = Math.PI / 2
-// group.add(plane2)
-
-
-var logo = []
+const logo = []
   .concat(shiftCubesBy(0, 3, -3, topNameSlim()))
   .concat(shiftCubesBy(0, -3, 3, bottomNameSlim()))
 
@@ -85,14 +56,12 @@ cameraGroup.add(lightRing)
 
 
 ////////////////////////////////////
-var $backface = $('#content-backface')
-var backface = new THREE.CSS3DObject($backface.get(0));
-var object = new THREE.CSS3DObject($('#content').get(0));
-// object = new THREE.CSS3DObject(number);
+const $backface = $('#content-backface')
+const backface = new THREE.CSS3DObject($backface.get(0));
+const object = new THREE.CSS3DObject($('#content').get(0));
 
-// var objectScale = 0.002
-var fontFactor = 2
-var objectScale = cubeSize * 0.1 / fontFactor
+const fontFactor = 2
+const objectScale = cubeSize * 0.1 / fontFactor
 object.scale.set(objectScale, objectScale, objectScale)
 
 object.position.y = -26 * cubeSize
@@ -105,9 +74,6 @@ backface.scale.set(objectScale, objectScale, objectScale)
 backface.position.y = -26 * cubeSize + 0.01
 backface.position.z = -10 * cubeSize
 backface.rotation.x = Math.PI / 2
-window.backface = backface
-
-window.object = object
 
 group.add(object);
 group.add(backface)
@@ -122,11 +88,6 @@ function hyperbole (n, m, c, a) {
     return - 1 / (x * 1 / c + 1 / (a - m) - n) + a
   }
 }
-
-var scrollRotation = 0
-var scrollPosition = 0
-var mouseX = 0
-var mouseY = 0
 
 function render() {
   // http://jsfiddle.net/DLta8/143/
@@ -163,41 +124,54 @@ function animate() {
   render()
 }
 
-animate()
+const rotationFunction = hyperbole(0, 0, 15, Math.PI / (2 - 0.3))
 
-registerEvents()
+const onResize = () => {
+  const width = $window.width()
+  const height = $window.height()
 
-const rotationFunction = hyperbole(0, 0, 10, Math.PI / (2 - 0.3))
+  camera.aspect = width / height
+  camera.updateProjectionMatrix()
 
-function registerEvents () {
+  renderer.setSize(width, height)
+  cssRenderer.setSize(width, height)
 
-  $(window).on('resize', e => {
-      const width = $(window).width()
-      const height = $(window).height()
-
-      camera.aspect = width / height
-      camera.updateProjectionMatrix()
-
-      renderer.setSize(width, height)
-      cssRenderer.setSize(width, height)
-
-      renderer.render(scene, camera)
-      cssRenderer.render(scene, camera)
-
-    })
-  .on('scroll', () => {
-      const scrollTop = document.body.scrollTop
-        | document.documentElement.scrollTop
-
-      scrollRotation = - rotationFunction(scrollTop / 10)
-      scrollPosition = scrollTop * 0.01
-    })
-  .on('mousemove', e => {
-    mouseX = e.screenX / window.innerWidth * 2 - 1;
-    mouseY = - e.screenY / window.innerHeight * 2 + 1;
-  }).on('deviceorientation', e => {
-    const initialPitch = 30
-    mouseY = (e.originalEvent.beta - initialPitch) / -180 * 16
-    mouseX = e.originalEvent.gamma / 90 * 8
-  })
+  renderer.render(scene, camera)
+  cssRenderer.render(scene, camera)
 }
+
+const onScroll = () => {
+  const scrollTop = document.body.scrollTop
+    | document.documentElement.scrollTop
+
+  scrollRotation = - rotationFunction(scrollTop / 10)
+  scrollPosition = scrollTop * 0.01
+}
+
+const registerEvents = () => {
+  $window
+    .on('resize', onResize)
+    .on('scroll', onScroll)
+    .on('mousemove', e => {
+      mouseX = e.screenX / window.innerWidth * 2 - 1;
+      mouseY = - e.screenY / window.innerHeight * 2 + 1;
+    })
+
+  if (window.DeviceOrientationEvent && 'ontouchstart' in window) {
+    $window.on('deviceorientation', e => {
+      const initialPitch = 30
+      mouseY = (e.originalEvent.beta - initialPitch) / -180 * 16
+      mouseX = e.originalEvent.gamma / 90 * 8
+    })
+  }
+}
+
+$(document).ready(() => {
+  $('#viewport').append(renderer.domElement)
+  $('#css-viewport').append(cssRenderer.domElement)
+
+  registerEvents()
+  onResize()
+  onScroll()
+  animate()
+})
