@@ -126,9 +126,19 @@ function animate() {
 
 const rotationFunction = hyperbole(0, 0, 15, Math.PI / (2 - 0.3))
 
-const onResize = () => {
-  const width = $window.width()
-  const height = $window.height()
+const onResize = e => {
+
+  $('#debug').html($window.height())
+
+  // TODO: On initial result, check whether it's a touchscreen device and
+  // increase the viewport height by the approximate height of the address bar.
+  if (!e.initialResize && 'ontouchstart' in window) {
+    $('#viewport').css('height', $window.height())
+    return
+  }
+
+  const width = $('#viewport').width()
+  const height = $('#viewport').height()
 
   camera.aspect = width / height
   camera.updateProjectionMatrix()
@@ -141,11 +151,18 @@ const onResize = () => {
 }
 
 const onScroll = () => {
-  const scrollTop = document.body.scrollTop
-    || document.documentElement.scrollTop
+  const scrollTop = $window.scrollTop()
 
   scrollRotation = - rotationFunction(scrollTop / 10)
   scrollPosition = scrollTop * 0.01
+
+  if (scrollRotation < Math.PI / -4) {
+    $('#content-backface-wrapper').hide()
+    $('#css-viewport').css('z-index', 1000)
+  } else {
+    $('#content-backface-wrapper').show()
+    $('#css-viewport').css('z-index', -1000)
+  }
 }
 
 const registerEvents = () => {
@@ -153,8 +170,8 @@ const registerEvents = () => {
     .on('resize', onResize)
     .on('scroll', onScroll)
     .on('mousemove', e => {
-      mouseX = e.screenX / window.innerWidth * 2 - 1;
-      mouseY = - e.screenY / window.innerHeight * 2 + 1;
+      mouseX = e.clientX / $('#viewport').width() * 2 - 1
+      mouseY = - e.clientY / $('#viewport').height() * 2 + 1
     })
 
   if (window.DeviceOrientationEvent && 'ontouchstart' in window) {
@@ -179,7 +196,7 @@ $(document).ready(() => {
   $('#css-viewport').append(cssRenderer.domElement)
 
   registerEvents()
-  onResize()
+  onResize({initialResize: true})
   onScroll()
   animate()
 })
