@@ -13,23 +13,14 @@
 
       #content,
       #content-backface {
-        backface-visibility: hidden;
         width: 90%;
         max-width: 800px;
-        /*width: 100px;
-        height: : 100px;*/
-        /*background-color: orange;*/
-        overflow: visible;
-
-        /*border: 1px solid red;*/
       }
 
       #content-wrapper {
         font-size: 1.5em;
         width: 100%;
         position: absolute;
-
-        /*border: 1px solid green;*/
       }
 
       #content-backface-wrapper {
@@ -37,36 +28,23 @@
         height: 10000px;
         position: absolute;
         background-color: white;
-
-        /*border: 1px solid blue;*/
       }
 
       #viewport,
       #css-viewport {
-        /*position: fixed;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;*/
-
-
         position: fixed;
         left: 0;
         right: 0;
         height: 100%;
-
-        /*background-color: yellow;*/
-      }
-
-      #debug {
-        position: fixed;
       }
     </style>
   </head>
   <body>
+    <!-- TODO: Add the viewports dynamically -->
     <div id="css-viewport"></div>
     <div id="viewport"></div>
-    <pre id="debug">debug</pre>
+
+    <!-- TODO: Wrap the content dynamically -->
     <div id="content">
       <div id="content-wrapper">
         <h1>Bla bla</h1>
@@ -82,18 +60,19 @@
       </div>
     </div>
 
+    <!-- TODO: Add the backface dynamically -->
     <div id="content-backface">
       <div id="content-backface-wrapper"></div>
     </div>
 
     <!-- For fast development -->
-    <!-- <script src="node_modules/css3drenderer/node_modules/three/three.js" charset="utf-8"></script> -->
     <script src="node_modules/three/build/three.js" charset="utf-8"></script>
     <script src="node_modules/css3drenderer/CSS3Drenderer-browser.js" charset="utf-8"></script>
 
     <!-- Only production bundle will contain the above dependencies. -->
     <script src="build/bundle.js" charset="utf-8"></script>
 
+    <!-- TODO: Add dynamically -->
     <div style="height: 1200px"></div>
 
   </body>

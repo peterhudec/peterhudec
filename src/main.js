@@ -67,7 +67,7 @@ cameraGroup.add(lightRing)
 
 const scrollLabel = new THREE.Group()
 addCubes(scrollLabel, scrollMessage, cubeSize * 0.25)
-scrollLabel.position.set(0, -30 * cubeSize, -60 * cubeSize)
+scrollLabel.position.set(0, -40 * cubeSize, -60 * cubeSize)
 group.add(scrollLabel)
 
 
