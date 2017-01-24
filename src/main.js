@@ -2,6 +2,10 @@ import {default as $} from 'jquery'
 
 import * as lights from './lights'
 
+
+// Configuration
+const cubeSize = 0.1
+
 // Global variables
 let scrollRotation = 0
 let scrollPosition = 0
@@ -10,21 +14,8 @@ let mouseY = 0
 
 const $window = $(window)
 
-const scene = new THREE.Scene()
-const camera = new THREE.PerspectiveCamera(
-  30,
-  $window.width() / $window.height(),
-  0.1,
-  1000
-)
-const cameraGroup = new THREE.Group()
-scene.add(cameraGroup)
 
-cameraGroup.add(camera)
-cameraGroup.position.set(0, 0, 0)
-camera.position.z = 10
-
-
+// Renderers
 const renderer = new THREE.WebGLRenderer({
   antialias: true,
   alpha: true,
@@ -35,10 +26,28 @@ const cssRenderer = new THREE.CSS3DRenderer({
   antialias: true
 })
 
+
+// Scene
+const scene = new THREE.Scene()
+const camera = new THREE.PerspectiveCamera(
+  30,
+  $window.width() / $window.height(),
+  0.1,
+  1000
+)
+
+
+// Camera
+const cameraGroup = new THREE.Group()
+cameraGroup.add(camera)
+cameraGroup.position.set(0, 0, 0)
+camera.position.z = 10
+scene.add(cameraGroup)
+
+
+// Main group
 const group = new THREE.Group()
 scene.add(group)
-
-const cubeSize = 0.1
 
 const logo = []
   .concat(shiftCubesBy(0, 3, -3, topNameSlim()))
@@ -49,61 +58,37 @@ logoGroup.rotation.x = Math.PI / 2
 group.add(logoGroup)
 addCubes(logoGroup, logo, cubeSize)
 
-
 const lightRing = lights.ring(7, 5, 0xffffff)
 lightRing.position.z = -3
 cameraGroup.add(lightRing)
 
-
-
-// const scrollButtonElement = document.createElement('h1')
-// scrollButtonElement.innerHTML = 'Scroll'
-// const scrollButton = new THREE.CSS3DObject(scrollButtonElement)
-// scrollButton.scale.set(0.5, 0.5, 0.5)
-// scrollButton.position.set(10, 10, 10)
-// const scrollButton = new THREE.Mesh(
-//   new THREE.SphereGeometry(cubeSize, 32, 32),
-//   new THREE.MeshBasicMaterial({color: 0xff0000})
-// )
-// scrollButton.position.set(0, -12 * cubeSize, -12 * cubeSize)
-
-
 const scrollButton = new THREE.Group()
 addCubes(scrollButton, scrollCubes(), cubeSize * 0.25)
-scrollButton.add()
 scrollButton.position.set(0, -30 * cubeSize, -60 * cubeSize)
-
 group.add(scrollButton)
 
 
-////////////////////////////////////
-const $backface = $('#content-backface')
-const backface = new THREE.CSS3DObject($backface.get(0));
-const object = new THREE.CSS3DObject($('#content').get(0));
-
+// Content
 const fontFactor = 2
 const objectScale = cubeSize * 0.1 / fontFactor
-object.scale.set(objectScale, objectScale, objectScale)
 
-object.position.y = -26 * cubeSize
-object.position.z = -10 * cubeSize
-object.rotation.x = Math.PI / 2
-
-
+const $backface = $('#content-backface')
+const backface = new THREE.CSS3DObject($backface.get(0))
 backface.scale.set(objectScale, objectScale, objectScale)
-
 backface.position.y = -26 * cubeSize + 0.01
 backface.position.z = -10 * cubeSize
 backface.rotation.x = Math.PI / 2
-
-group.add(object);
 group.add(backface)
-////////////////////////////////////
+
+const object = new THREE.CSS3DObject($('#content').get(0))
+object.scale.set(objectScale, objectScale, objectScale)
+object.position.y = -26 * cubeSize
+object.position.z = -10 * cubeSize
+object.rotation.x = Math.PI / 2
+group.add(object)
 
 
-/**
-* Hyperbole passing through (n, m) with slope (c) and asymptote (a)
-*/
+// Hyperbole passing through (n, m) with slope (c) and asymptote (a)
 function hyperbole (n, m, c, a) {
   return function (x) {
     return - 1 / (x * 1 / c + 1 / (a - m) - n) + a
@@ -116,8 +101,7 @@ function render() {
   newGroupPosition.y = scrollPosition
   group.position.lerp(newGroupPosition, 0.07)
 
-
-  var groupQuarternion = new THREE.Quaternion()
+  const groupQuarternion = new THREE.Quaternion()
     .setFromEuler(new THREE.Euler(
       scrollRotation,
       0,
@@ -149,7 +133,6 @@ const FOVVector = new THREE.Vector3(0, 0, 3500)
 camera.position.z = 1000
 
 function renderFOV() {
-
   const duration = 0.07
 
   const cameraVector = group.position.clone()
@@ -164,9 +147,7 @@ function renderFOV() {
   camera.updateProjectionMatrix()
 
   renderer.render(scene, camera)
-  // cssRenderer.render(scene, camera)
 
-  // console.log(lightRing.position.z)
   if (camera.position.z <= 10) {
     return false
   }
@@ -261,10 +242,5 @@ $(document).ready(() => {
   registerEvents()
   onResize()
   onScroll()
-  FOVAnimation(() => {
-    console.log('fov end')
-    animate()
-  })
-
-  // animate()
+  FOVAnimation(animate)
 })
