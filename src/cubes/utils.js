@@ -1,14 +1,13 @@
-'use strict'
 
-var glossyMaterial = new THREE.MeshPhongMaterial({
+const glossyMaterial = new THREE.MeshPhongMaterial({
     color: 0xffffff,
     specular: 0xffffff,
     shininess: 100
 })
 
-function addCubes(group, cubes, size) {
+export const addCubes = (group, cubes, size) => {
   cubes.forEach(function (c) {
-    var cube = new THREE.Mesh(new THREE.BoxGeometry(size, size, size), glossyMaterial)
+    const cube = new THREE.Mesh(new THREE.BoxGeometry(size, size, size), glossyMaterial)
     cube.position.set(
       c[0] * size,
       c[1] * size,
@@ -17,7 +16,7 @@ function addCubes(group, cubes, size) {
   })
 }
 
-function shiftCubesBy(x, y, z, cubes) {
+export const shiftCubesBy = (x, y, z, cubes) => {
   return cubes.map(function (c) {
     return [
       c[0] + x,
@@ -27,21 +26,21 @@ function shiftCubesBy(x, y, z, cubes) {
   })
 }
 
-var bar1x1x1 = [
+export const bar1x1x1 = [
   [0, 0, 0],
 ]
 
-var bar1x1x2 = [
+export const bar1x1x2 = [
   [0, 0, 0],
   [0, 0, 1],
 ]
 
-var bar1x2x1 = [
+export const bar1x2x1 = [
   [0, 0, 0],
   [0, 1, 0],
 ]
 
-var bar5x1x1 = [
+export const bar5x1x1 = [
   [-2, 0, 0],
   [-1, 0, 0],
   [0, 0, 0],
@@ -49,7 +48,7 @@ var bar5x1x1 = [
   [2, 0, 0],
 ]
 
-var bar1x5x1 = [
+export const bar1x5x1 = [
   [0, -2, 0],
   [0, -1, 0],
   [0, 0, 0],
@@ -57,7 +56,7 @@ var bar1x5x1 = [
   [0, 2, 0],
 ]
 
-var bar1x1x5 = [
+export const bar1x1x5 = [
   [0, 0, -2],
   [0, 0, -1],
   [0, 0, 0],
@@ -65,57 +64,57 @@ var bar1x1x5 = [
   [0, 0, 2],
 ]
 
-var bar3x1x1 = [
+export const bar3x1x1 = [
   [-1, 0, 0],
   [0, 0, 0],
   [1, 0, 0],
 ]
 
-var bar1x3x1 = [
+export const bar1x3x1 = [
   [0, -1, 0],
   [0, 0, 0],
   [0, 1, 0],
 ]
 
-var bar1x1x3 = [
+export const bar1x1x3 = [
   [0, 0, -1],
   [0, 0, 0],
   [0, 0, 1],
 ]
 
-var bar4x1x1 = [
+export const bar4x1x1 = [
   [-2, 0, 0],
   [-1, 0, 0],
   [0, 0, 0],
   [1, 0, 0],
 ]
 
-var bar1x4x1 = [
+export const bar1x4x1 = [
   [0, -2, 0],
   [0, -1, 0],
   [0, 0, 0],
   [0, 1, 0],
 ]
 
-var bar1x1x4 = [
+export const bar1x1x4 = [
   [0, 0, -2],
   [0, 0, -1],
   [0, 0, 0],
   [0, 0, 1],
 ]
 
-var flatU = []
-.concat(shiftCubesBy(-2, 0, 0, bar1x1x5))
-.concat(shiftCubesBy(0, 0, 2, bar3x1x1))
-.concat(shiftCubesBy(2, 0, 0, bar1x1x5))
+export const flatU = []
+  .concat(shiftCubesBy(-2, 0, 0, bar1x1x5))
+  .concat(shiftCubesBy(0, 0, 2, bar3x1x1))
+  .concat(shiftCubesBy(2, 0, 0, bar1x1x5))
 
-var standingH = []
+export const standingH = []
   .concat(shiftCubesBy(0, 0, 0, bar5x1x1))
   .concat(shiftCubesBy(-2, -2, 0, bar1x2x1))
   .concat(shiftCubesBy(2, -2, 0, bar1x2x1))
   .concat(shiftCubesBy(-2, 1, 0, bar1x2x1))
 
-var standingU = []
+export const standingU = []
   .concat(shiftCubesBy(0, -2, 0, bar5x1x1))
   .concat(shiftCubesBy(2, 1, 0, bar1x4x1))
   .concat(shiftCubesBy(-2, 1, 0, bar1x4x1))

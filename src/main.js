@@ -1,6 +1,9 @@
 import {default as $} from 'jquery'
 
 import * as lights from './lights'
+import {logo} from './cubes/logo'
+import {scrollMessage} from './cubes/scroll'
+import {addCubes} from './cubes/utils'
 
 
 // Configuration
@@ -49,9 +52,9 @@ scene.add(cameraGroup)
 const group = new THREE.Group()
 scene.add(group)
 
-const logo = []
-  .concat(shiftCubesBy(0, 3, -3, topNameSlim()))
-  .concat(shiftCubesBy(0, -3, 3, bottomNameSlim()))
+// const logo = []
+//   .concat(shiftCubesBy(0, 3, -3, topNameSlim()))
+//   .concat(shiftCubesBy(0, -3, 3, bottomNameSlim()))
 
 const logoGroup = new THREE.Group()
 logoGroup.rotation.x = Math.PI / 2
@@ -62,10 +65,10 @@ const lightRing = lights.ring(7, 5, 0xffffff)
 lightRing.position.z = -3
 cameraGroup.add(lightRing)
 
-const scrollButton = new THREE.Group()
-addCubes(scrollButton, scrollCubes(), cubeSize * 0.25)
-scrollButton.position.set(0, -30 * cubeSize, -60 * cubeSize)
-group.add(scrollButton)
+const scrollLabel = new THREE.Group()
+addCubes(scrollLabel, scrollMessage, cubeSize * 0.25)
+scrollLabel.position.set(0, -30 * cubeSize, -60 * cubeSize)
+group.add(scrollLabel)
 
 
 // Content
