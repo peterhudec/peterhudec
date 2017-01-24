@@ -127,18 +127,8 @@ function animate() {
 const rotationFunction = hyperbole(0, 0, 15, Math.PI / (2 - 0.3))
 
 const onResize = e => {
-
-  $('#debug').html($window.height())
-
-  // TODO: On initial result, check whether it's a touchscreen device and
-  // increase the viewport height by the approximate height of the address bar.
-  if (!e.initialResize && 'ontouchstart' in window) {
-    $('#viewport').css('height', $window.height())
-    return
-  }
-
-  const width = $('#viewport').width()
-  const height = $('#viewport').height()
+  const width = $window.width()
+  const height = $window.height()
 
   camera.aspect = width / height
   camera.updateProjectionMatrix()
@@ -176,9 +166,22 @@ const registerEvents = () => {
 
   if (window.DeviceOrientationEvent && 'ontouchstart' in window) {
     $window.on('deviceorientation', e => {
+      const orientation = screen.orientation
+        || screen.mozOrientation
+        || screen.msOrientation
+
       const initialPitch = 30
-      const newMouseX = e.originalEvent.gamma / 90 * 8
-      const newMouseY = (e.originalEvent.beta - initialPitch) / -180 * 16
+      const pitchFactor = 16
+      const yawFactor = 8
+
+      let newMouseX, newMouseY
+      if (orientation.type.endsWith('secondary')) {
+        newMouseY = (e.originalEvent.gamma - initialPitch) / -90 * pitchFactor
+        newMouseX = (e.originalEvent.beta) / -180 * yawFactor
+      } else {
+        newMouseX = e.originalEvent.gamma / 90 * yawFactor
+        newMouseY = (e.originalEvent.beta - initialPitch) / -180 * pitchFactor
+      }
 
       if (Math.abs(newMouseX) < 1) {
         mouseX = newMouseX
