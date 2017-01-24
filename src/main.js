@@ -55,6 +55,27 @@ lightRing.position.z = -3
 cameraGroup.add(lightRing)
 
 
+
+// const scrollButtonElement = document.createElement('h1')
+// scrollButtonElement.innerHTML = 'Scroll'
+// const scrollButton = new THREE.CSS3DObject(scrollButtonElement)
+// scrollButton.scale.set(0.5, 0.5, 0.5)
+// scrollButton.position.set(10, 10, 10)
+// const scrollButton = new THREE.Mesh(
+//   new THREE.SphereGeometry(cubeSize, 32, 32),
+//   new THREE.MeshBasicMaterial({color: 0xff0000})
+// )
+// scrollButton.position.set(0, -12 * cubeSize, -12 * cubeSize)
+
+
+const scrollButton = new THREE.Group()
+addCubes(scrollButton, scrollCubes(), cubeSize * 0.25)
+scrollButton.add()
+scrollButton.position.set(0, -30 * cubeSize, -60 * cubeSize)
+
+group.add(scrollButton)
+
+
 ////////////////////////////////////
 const $backface = $('#content-backface')
 const backface = new THREE.CSS3DObject($backface.get(0));
@@ -124,7 +145,7 @@ function animate() {
   render()
 }
 
-const FOVVector = new THREE.Vector3(0, 0, 5000)
+const FOVVector = new THREE.Vector3(0, 0, 3500)
 camera.position.z = 1000
 
 function renderFOV() {
@@ -136,7 +157,7 @@ function renderFOV() {
   camera.position.lerp(cameraVector, duration)
 
   const newFOFOVVector = FOVVector.clone()
-  newFOFOVVector.z = 40
+  newFOFOVVector.z = 30
   FOVVector.lerp(newFOFOVVector, duration)
 
   camera.setFocalLength(FOVVector.z)
@@ -232,12 +253,13 @@ const registerEvents = () => {
   }
 }
 
+
 $(document).ready(() => {
   $('#viewport').append(renderer.domElement)
   $('#css-viewport').append(cssRenderer.domElement)
 
   registerEvents()
-  onResize({initialResize: true})
+  onResize()
   onScroll()
   FOVAnimation(() => {
     console.log('fov end')
