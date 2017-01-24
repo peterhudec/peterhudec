@@ -124,6 +124,44 @@ function animate() {
   render()
 }
 
+const FOVVector = new THREE.Vector3(0, 0, 5000)
+camera.position.z = 1000
+
+function renderFOV() {
+
+  const duration = 0.07
+
+  const cameraVector = group.position.clone()
+  cameraVector.z = 9
+  camera.position.lerp(cameraVector, duration)
+
+  const newFOFOVVector = FOVVector.clone()
+  newFOFOVVector.z = 40
+  FOVVector.lerp(newFOFOVVector, duration)
+
+  camera.setFocalLength(FOVVector.z)
+  camera.updateProjectionMatrix()
+
+  renderer.render(scene, camera)
+  // cssRenderer.render(scene, camera)
+
+  // console.log(lightRing.position.z)
+  if (camera.position.z <= 10) {
+    return false
+  }
+
+  return true
+}
+
+function FOVAnimation(onEnd) {
+  if (renderFOV()) {
+    requestAnimationFrame(() => FOVAnimation(onEnd))
+  } else {
+    console.log('stop')
+    onEnd()
+  }
+}
+
 const rotationFunction = hyperbole(0, 0, 15, Math.PI / (2 - 0.3))
 
 const onResize = e => {
@@ -201,5 +239,10 @@ $(document).ready(() => {
   registerEvents()
   onResize({initialResize: true})
   onScroll()
-  animate()
+  FOVAnimation(() => {
+    console.log('fov end')
+    animate()
+  })
+
+  // animate()
 })
