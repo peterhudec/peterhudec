@@ -28,7 +28,7 @@ const td = []
   .concat(utils.shiftCubesBy(0, 2, 0, utils.bar5x1x1))
   .concat(utils.shiftCubesBy(-2, 2, 1, utils.bar1x1x1))
   .concat(utils.shiftCubesBy(2, 2, -2, utils.bar1x1x2))
-  .concat(utils.shiftCubesBy(0, 0, 0, utils.bar1x4x1))
+  .concat(utils.shiftCubesBy(0, 0, 2, utils.bar1x4x1))
 
 const ee = []
   .concat(utils.shiftCubesBy(0, 2, -2, utils.bar5x1x1))
@@ -37,8 +37,7 @@ const ee = []
 
 const rc = []
   .concat(utils.shiftCubesBy(-2, 2, 0, utils.bar1x1x5))
-  .concat(utils.shiftCubesBy(-2, 0, 0, utils.bar1x4x1))
-
+  .concat(utils.shiftCubesBy(-2, 0, 2, utils.bar1x4x1))
   .concat(utils.shiftCubesBy(1, 2, -2, utils.bar4x1x1))
   .concat(utils.shiftCubesBy(1, 2, 2, utils.bar4x1x1))
 

@@ -25,7 +25,9 @@ const dt = []
   .concat(utils.shiftCubesBy(0, 0, -2, utils.bar5x1x1))
   .concat(utils.shiftCubesBy(-2, -1, -2, utils.bar1x1x1))
   .concat(utils.shiftCubesBy(2, 1, -2, utils.bar1x2x1))
-  .concat(utils.shiftCubesBy(0, 0, 1, utils.bar1x1x4))
+  
+  // .concat(utils.shiftCubesBy(0, 0, 1, utils.bar1x1x4))
+  .concat(utils.shiftCubesBy(0, -2, 1, utils.bar1x1x4))
 
 const ee = []
   .concat(utils.shiftCubesBy(0, 2, -2, utils.bar5x1x1))
@@ -36,7 +38,9 @@ const cr = []
   .concat(utils.shiftCubesBy(-2, 0, -2, utils.bar1x5x1))
   .concat(utils.shiftCubesBy(1, 2, -2, utils.bar4x1x1))
   .concat(utils.shiftCubesBy(1, -2, -2, utils.bar4x1x1))
+
   .concat(utils.shiftCubesBy(-2, -2, 1, utils.bar1x1x4))
+  // .concat(utils.shiftCubesBy(-2, 2, 1, utils.bar1x1x4))
 
 export const topName = []
   .concat(utils.shiftCubesBy(LETTER_SPACING * -2, 0, 0, hp))
