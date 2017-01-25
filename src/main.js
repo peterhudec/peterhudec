@@ -19,11 +19,11 @@ const $window = $(window)
 
 
 // Renderers
-const renderer = new THREE.WebGLRenderer({
+const webGLRenderer = new THREE.WebGLRenderer({
   antialias: true,
   alpha: true,
 })
-renderer.setClearColor(0xffffff, 0)
+webGLRenderer.setClearColor(0xffffff, 0)
 
 const cssRenderer = new THREE.CSS3DRenderer({
   antialias: true
@@ -123,7 +123,7 @@ function render() {
     .setFromEuler(new THREE.Euler(cameraRotationX, cameraRotationY, 0, 'XYZ'))
   cameraGroup.quaternion.slerp(cameraQuaternion, 0.07)
 
-  renderer.render(scene, camera)
+  webGLRenderer.render(scene, camera)
   cssRenderer.render(scene, camera)
 }
 
@@ -149,7 +149,7 @@ function renderFOV() {
   camera.setFocalLength(FOVVector.z)
   camera.updateProjectionMatrix()
 
-  renderer.render(scene, camera)
+  webGLRenderer.render(scene, camera)
 
   if (camera.position.z <= 10) {
     return false
@@ -176,10 +176,10 @@ const onResize = e => {
   camera.aspect = width / height
   camera.updateProjectionMatrix()
 
-  renderer.setSize(width, height)
+  webGLRenderer.setSize(width, height)
   cssRenderer.setSize(width, height)
 
-  renderer.render(scene, camera)
+  webGLRenderer.render(scene, camera)
   cssRenderer.render(scene, camera)
 }
 
@@ -203,8 +203,8 @@ const registerEvents = () => {
     .on('resize', onResize)
     .on('scroll', onScroll)
     .on('mousemove', e => {
-      mouseX = e.clientX / $('#viewport').width() * 2 - 1
-      mouseY = - e.clientY / $('#viewport').height() * 2 + 1
+      mouseX = e.clientX / $('#webgl-viewport').width() * 2 - 1
+      mouseY = - e.clientY / $('#webgl-viewport').height() * 2 + 1
     })
 
   if (window.DeviceOrientationEvent && 'ontouchstart' in window) {
@@ -239,7 +239,7 @@ const registerEvents = () => {
 
 
 $(document).ready(() => {
-  $('#viewport').append(renderer.domElement)
+  $('#webgl-viewport').append(webGLRenderer.domElement)
   $('#css-viewport').append(cssRenderer.domElement)
 
   registerEvents()
