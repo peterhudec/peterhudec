@@ -15,6 +15,13 @@ const createRendererElement = renderer =>
     .append(renderer.domElement)
 
 
+const wrapContentElement = $element =>
+  $('<div>')
+    .css('width', '90%')
+    .css('max-width', 800)
+    .append($element)
+
+
 $(document).ready(() => {
   // Configuration
   const cubeSize = 0.1
@@ -27,33 +34,35 @@ $(document).ready(() => {
 
   const $window = $(window)
   const $body = $('body')
+    .height(1000) // Enforce scroll
 
   // Renderers
+  const cssRenderer = new THREE.CSS3DRenderer({
+    antialias: true
+  })
+  const $CSSViewport = createRendererElement(cssRenderer)
+  $body.append($CSSViewport)
+
   const webGLRenderer = new THREE.WebGLRenderer({
     antialias: true,
     alpha: true,
   })
   webGLRenderer.setClearColor(0xffffff, 0)
   const $webGLViewport = createRendererElement(webGLRenderer)
-  $body.prepend($webGLViewport)
+  $body.append($webGLViewport)
 
-  const cssRenderer = new THREE.CSS3DRenderer({
-    antialias: true
-  })
-  const $CSSViewport = createRendererElement(cssRenderer)
-  $body.prepend($CSSViewport)
 
   // Scene
   const scene = new THREE.Scene()
+
+
+  // Camera
   const camera = new THREE.PerspectiveCamera(
     30,
     $window.width() / $window.height(),
     0.1,
     1000
   )
-
-
-  // Camera
   const cameraGroup = new THREE.Group()
   cameraGroup.add(camera)
   cameraGroup.position.set(0, 0, 0)
@@ -64,10 +73,6 @@ $(document).ready(() => {
   // Main group
   const group = new THREE.Group()
   scene.add(group)
-
-  // const logo = []
-  //   .concat(shiftCubesBy(0, 3, -3, topNameSlim()))
-  //   .concat(shiftCubesBy(0, -3, 3, bottomNameSlim()))
 
   const logoGroup = new THREE.Group()
   logoGroup.rotation.x = Math.PI / 2
@@ -88,20 +93,34 @@ $(document).ready(() => {
   const fontFactor = 2
   const objectScale = cubeSize * 0.1 / fontFactor
 
-  const $backface = $('#content-backface-wrapper')
-  const backface = new THREE.CSS3DObject($backface.get(0))
-  backface.scale.set(objectScale, objectScale, objectScale)
-  backface.position.y = -26 * cubeSize + 0.01
-  backface.position.z = -10 * cubeSize
-  backface.rotation.x = Math.PI / 2
-  group.add(backface)
+  const $contentBackface = wrapContentElement(
+    $('<div>')
+      .css('position', 'absolute')
+      .css('width', '100%')
+      .css('height', 10000)
+      .css('background-color', 'white'))
 
-  const object = new THREE.CSS3DObject($('#content-wrapper').get(0))
-  object.scale.set(objectScale, objectScale, objectScale)
-  object.position.y = -26 * cubeSize
-  object.position.z = -10 * cubeSize
-  object.rotation.x = Math.PI / 2
-  group.add(object)
+  const contentBackface = new THREE.CSS3DObject($contentBackface.get(0))
+  contentBackface.scale.set(objectScale, objectScale, objectScale)
+  contentBackface.position.y = -26 * cubeSize + 0.01
+  contentBackface.position.z = -10 * cubeSize
+  contentBackface.rotation.x = Math.PI / 2
+  group.add(contentBackface)
+
+
+  const $content = wrapContentElement(
+    $('<div>')
+      .css('position', 'absolute')
+      .css('width', '100%')
+      .css('font-size', '1.5em')
+      .html($('#content').text()))
+
+  const content = new THREE.CSS3DObject($content.get(0))
+  content.scale.set(objectScale, objectScale, objectScale)
+  content.position.y = -26 * cubeSize
+  content.position.z = -10 * cubeSize
+  content.rotation.x = Math.PI / 2
+  group.add(content)
 
 
   // Hyperbole passing through (n, m) with slope (c) and asymptote (a)
@@ -203,10 +222,10 @@ $(document).ready(() => {
     scrollPosition = scrollTop * 0.01
 
     if (scrollRotation < Math.PI / -4) {
-      $('#content-backface').hide()
+      $contentBackface.hide()
       $CSSViewport.css('z-index', 1000)
     } else {
-      $('#content-backface').show()
+      $contentBackface.show()
       $CSSViewport.css('z-index', -1000)
     }
   }
