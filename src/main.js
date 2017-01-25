@@ -22,6 +22,14 @@ const wrapContentElement = $element =>
     .append($element)
 
 
+// Hyperbole passing through (n, m) with slope (c) and asymptote (a)
+function hyperbole (n, m, c, a) {
+  return function (x) {
+    return - 1 / (x * 1 / c + 1 / (a - m) - n) + a
+  }
+}
+
+
 $(document).ready(() => {
   // Configuration
   const cubeSize = 0.1
@@ -34,14 +42,8 @@ $(document).ready(() => {
 
   const $window = $(window)
   const $body = $('body')
-    .height(1000) // Enforce scroll
 
   // Renderers
-  const cssRenderer = new THREE.CSS3DRenderer({
-    antialias: true
-  })
-  const $CSSViewport = createRendererElement(cssRenderer)
-  $body.append($CSSViewport)
 
   const webGLRenderer = new THREE.WebGLRenderer({
     antialias: true,
@@ -49,8 +51,14 @@ $(document).ready(() => {
   })
   webGLRenderer.setClearColor(0xffffff, 0)
   const $webGLViewport = createRendererElement(webGLRenderer)
-  $body.append($webGLViewport)
+  $body.prepend($webGLViewport)
 
+
+  const cssRenderer = new THREE.CSS3DRenderer({
+    antialias: true
+  })
+  const $CSSViewport = createRendererElement(cssRenderer)
+  $body.prepend($CSSViewport)
 
   // Scene
   const scene = new THREE.Scene()
@@ -93,6 +101,13 @@ $(document).ready(() => {
   const fontFactor = 2
   const objectScale = cubeSize * 0.1 / fontFactor
 
+  const contentGroup = new THREE.Group()
+  contentGroup.position.y = -20 * cubeSize
+  contentGroup.position.z = -10 * cubeSize
+  contentGroup.rotation.x = Math.PI / 2
+  contentGroup.scale.set(objectScale, objectScale, objectScale)
+  group.add(contentGroup)
+
   const $contentBackface = wrapContentElement(
     $('<div>')
       .css('position', 'absolute')
@@ -101,34 +116,18 @@ $(document).ready(() => {
       .css('background-color', 'white'))
 
   const contentBackface = new THREE.CSS3DObject($contentBackface.get(0))
-  contentBackface.scale.set(objectScale, objectScale, objectScale)
-  contentBackface.position.y = -26 * cubeSize + 0.01
-  contentBackface.position.z = -10 * cubeSize
-  contentBackface.rotation.x = Math.PI / 2
-  group.add(contentBackface)
+  contentBackface.position.set(0, 0, -0.01)
+  contentGroup.add(contentBackface)
 
-
-  const $content = wrapContentElement(
-    $('<div>')
-      .css('position', 'absolute')
-      .css('width', '100%')
-      .css('font-size', '1.5em')
-      .html($('#content').text()))
-
-  const content = new THREE.CSS3DObject($content.get(0))
-  content.scale.set(objectScale, objectScale, objectScale)
-  content.position.y = -26 * cubeSize
-  content.position.z = -10 * cubeSize
-  content.rotation.x = Math.PI / 2
-  group.add(content)
-
-
-  // Hyperbole passing through (n, m) with slope (c) and asymptote (a)
-  function hyperbole (n, m, c, a) {
-    return function (x) {
-      return - 1 / (x * 1 / c + 1 / (a - m) - n) + a
-    }
-  }
+  contentGroup.add(
+    new THREE.CSS3DObject(
+      wrapContentElement(
+        $('<div>')
+          .css('position', 'absolute')
+          .css('width', '100%')
+          .css('font-size', '1.5em')
+          .html($('#content').text()))
+        .get(0)))
 
   function render() {
     // http://jsfiddle.net/DLta8/143/

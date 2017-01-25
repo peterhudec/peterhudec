@@ -6,17 +6,37 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style media="screen">
+
       body {
-        text-align: center;
+        margin: 0;
+        padding: 0;
       }
 
-      #content-container {
-        text-align: left;
-        margin: auto;
-        max-width: 800px;
-        padding: 2em;
+      #scroll-dummy {
+        height: 1000px;
       }
+
     </style>
+    <noscript>
+      <style>
+
+        body {
+          text-align: center;
+        }
+
+        #content-container {
+          text-align: left;
+          margin: auto;
+          max-width: 800px;
+          padding: 2em;
+        }
+
+        #scroll-dummy {
+          display: none;
+        }
+
+      </style>
+    </noscript>
   </head>
   <body>
     <noscript>
@@ -43,5 +63,7 @@
 
     <!-- Only production bundle will contain the above dependencies. -->
     <script src="build/bundle.js" charset="utf-8"></script>
+
+    <div id="scroll-dummy"></div>
   </body>
 </html>
