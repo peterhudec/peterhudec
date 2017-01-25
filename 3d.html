@@ -11,19 +11,19 @@
         padding: 0;
       }
 
-      #content,
-      #content-backface {
+      #content-wrapper,
+      #content-backface-wrapper {
         width: 90%;
         max-width: 800px;
       }
 
-      #content-wrapper {
+      #content {
         font-size: 1.5em;
         width: 100%;
         position: absolute;
       }
 
-      #content-backface-wrapper {
+      #content-backface {
         width: 100%;
         height: 10000px;
         position: absolute;
@@ -40,13 +40,14 @@
     </style>
   </head>
   <body>
+
     <!-- TODO: Add the viewports dynamically -->
     <div id="css-viewport"></div>
     <div id="viewport"></div>
 
     <!-- TODO: Wrap the content dynamically -->
-    <div id="content">
-      <div id="content-wrapper">
+    <div id="content-wrapper">
+      <div id="content">
         <h1>Bla bla</h1>
         <p>
           Lorem ipsum dolor sit amet, id idque aliquam vel, vitae dolorem ius in, usu ad indoctum rationibus. Vel nisl virtute appetere ut, habeo ridens tibique vim ad. Erat voluptaria comprehensam per an. Sed quaeque nostrum patrioque ei, ea nullam legere vix. Partem fabulas ut cum, soluta iudicabit sed an. Pri et verterem prodesset. Legimus percipit eu nam, ne mei facete vivendo iracundia, corpora erroribus ne sed.
@@ -61,8 +62,8 @@
     </div>
 
     <!-- TODO: Add the backface dynamically -->
-    <div id="content-backface">
-      <div id="content-backface-wrapper"></div>
+    <div id="content-backface-wrapper">
+      <div id="content-backface"></div>
     </div>
 
     <!-- For fast development -->

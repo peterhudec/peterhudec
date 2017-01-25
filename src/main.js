@@ -75,7 +75,7 @@ group.add(scrollLabel)
 const fontFactor = 2
 const objectScale = cubeSize * 0.1 / fontFactor
 
-const $backface = $('#content-backface')
+const $backface = $('#content-backface-wrapper')
 const backface = new THREE.CSS3DObject($backface.get(0))
 backface.scale.set(objectScale, objectScale, objectScale)
 backface.position.y = -26 * cubeSize + 0.01
@@ -83,7 +83,7 @@ backface.position.z = -10 * cubeSize
 backface.rotation.x = Math.PI / 2
 group.add(backface)
 
-const object = new THREE.CSS3DObject($('#content').get(0))
+const object = new THREE.CSS3DObject($('#content-wrapper').get(0))
 object.scale.set(objectScale, objectScale, objectScale)
 object.position.y = -26 * cubeSize
 object.position.z = -10 * cubeSize
@@ -190,10 +190,10 @@ const onScroll = () => {
   scrollPosition = scrollTop * 0.01
 
   if (scrollRotation < Math.PI / -4) {
-    $('#content-backface-wrapper').hide()
+    $('#content-backface').hide()
     $('#css-viewport').css('z-index', 1000)
   } else {
-    $('#content-backface-wrapper').show()
+    $('#content-backface').show()
     $('#css-viewport').css('z-index', -1000)
   }
 }
