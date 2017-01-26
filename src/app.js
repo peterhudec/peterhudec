@@ -20,9 +20,8 @@ const createRendererElement = renderer =>
 
 const wrapContentElement = $element =>
   $('<div>')
-    .css('width', '120%')
-    // .css('width', '90%')
-    .css('max-width', 1000)
+    .css('width', '110%')
+    .css('max-width', 1100)
     .append($element)
 
 
@@ -164,7 +163,7 @@ export const app = () => {
   logoTopGroup.position.x = 6
   logoBottomGroup.position.x = -6
   scrollLabel.position.y = scrollLabelY - 10
-
+  
   function render() {
     // Quaternion animations taken from this example.
     // http://jsfiddle.net/DLta8/143/
@@ -197,7 +196,6 @@ export const app = () => {
     scrollLabelPosition.y = scrollLabelY
     scrollLabel.position.lerp(scrollLabelPosition, 0.07)
 
-
     webGLRenderer.render(scene, camera)
     cssRenderer.render(scene, camera)
   }
@@ -208,18 +206,10 @@ export const app = () => {
   }
 
   const onResize = e => {
-    // const width = $window.width()
-    // const height = $window.height()
     const width = $webGLViewport.width()
     const height = $webGLViewport.height()
 
     camera.aspect = width / height
-
-    console.log('-------------')
-    console.log(width)
-    console.log(height)
-    console.log(camera.aspect)
-
 
     webGLRenderer.setSize(width, height)
     cssRenderer.setSize(width, height)

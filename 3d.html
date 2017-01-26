@@ -5,19 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Averia+Serif+Libre:300|Roboto+Slab:100,300,400" rel="stylesheet">
+
+
     <style media="screen">
 
       body {
         margin: 0;
         padding: 0;
+        font-family: 'Roboto Slab', "Palatino Linotype", "Book Antiqua", Palatino, serif;
+        font-weight: 100;
       }
 
-      h1 {
-        text-align: center;
+      h1, h2, h3, h4, h5, h6 {
+        font-family: 'Averia Serif Libre', serif;
+        font-weight: 300;
+      }
+
+      strong {
+        font-weight: 400;
+      }
+
+      p {
+        text-align: justify;
+      }
+
+      a,
+      a:active,
+      a:visited {
+        text-decoration: none;
+        color: inherit;
+        font-weight: 300;
+
+        display: inline-block;
+        vertical-align: top;
+        transition: transform 0.2s;
+      }
+
+      a:after {
+        content: "\27B8";
+
+        width: 1em;
+        font-size: 0.7em;
+        vertical-align: top;
+        margin-left: 0.2em;
+
+        transform: rotateZ(-45deg);
+        -webkit-transform: rotateZ(-45deg);
+        display: inline-block;
+        transition: transform 0.2s;
+      }
+
+      a:hover {
+        transform: translateZ(3em);
+        -webkit-transform: translateZ(3em);
       }
 
       #scroll-dummy {
-        height: 1200px;
+        height: 1500px;
+      }
+
+      .col {
+        float: left;
+        width: 50%;
+      }
+
+      @media only screen and (max-width: 550px) {
+        .col {
+          float: none;
+          width: auto;
+        }
       }
 
     </style>
@@ -39,6 +97,11 @@
           display: none;
         }
 
+        a:hover:after {
+          transform: rotateZ(0deg);
+          -webkit-transform: rotateZ(0deg);
+        }
+
       </style>
     </noscript>
   </head>
@@ -48,16 +111,58 @@
     </noscript>
     <noscript id="content">
       <div id="content-container">
-        <h1>Full-Stack JavaScript Developer</h1>
+        <!-- <h1>Dealing With It Since 1979</h1> -->
+        <h1>Tackling Challenges Since 1979</h1>
         <p>
-          Lorem ipsum dolor sit amet, id idque aliquam vel, vitae dolorem ius in, usu ad indoctum rationibus. Vel nisl virtute appetere ut, habeo ridens tibique vim ad. Erat voluptaria comprehensam per an. Sed quaeque nostrum patrioque ei, ea nullam legere vix. Partem fabulas ut cum, soluta iudicabit sed an. Pri et verterem prodesset. Legimus percipit eu nam, ne mei facete vivendo iracundia, corpora erroribus ne sed.
+          Hi, my name is <strong>Peter Hudec</strong>
+          (in case you couldn't read the logo).
+          I'm a full-stack software engineer with focus on fron-end and UI.
+          I very much like <em>functional</em> and <em>reactive functional</em>
+          programming, which concepts I try to apply where possible.
+          I'm also learning ELM and Clojure.
         </p>
-        <h2>Foo Bar Baz</h2>
-        <ul>
-          <li>Eos iudico hendrerit interpretaris ex, vix liber dolor ex. Eirmod animal evertitur mei ea, vim aeque habemus an. In mea habeo luptatum necessitatibus. Justo noster percipitur et nec. Mea essent aperiri denique ea, suas legimus voluptatibus has ad.</li>
-          <li>Et malorum volutpat est, eum copiosae invidunt no. Ex dolor fabulas his, affert delenit deleniti eu per. Semper recteque cum in. Vix justo tincidunt ex, in solet aliquam dolorem per.</li>
-          <li>Facer debitis ut his. Sea sale latine ut, veniam dolorum detracto an eam. Pro in consul fuisset mnesarchum, ius natum perfecto et. An vel suas porro gloriatur. Iudicabit prodesset ad pri, ut eros facete vituperatoribus eum. Aliquid eligendi has ut, quo id harum consequuntur.</li>
-        </ul>
+        <p>
+          I should perhaps mention that I was a
+          <a href="http://www.epa.eu/webgate?SEARCHTXT1=peter+hudec"
+            target="_blank">professional photojournalist</a>
+          for about 15 years, but I'm not in that business anymore.
+        </p>
+        <div class="row">
+          <div class="col">
+            <h2>Experienced In</h2>
+            <ul>
+              <li>HTML, CSS, SASS, Bootstrap, BEM</li>
+              <li>
+                JavaScript, CoffeeScript, NodeJS, AngularJS,
+                ReactJS, d3, jQuery, Ramda, Lodash
+              </li>
+              <li>Python, Flask, SQLAlchemy, Sphinx</li>
+              <li>Elasticsearch</li>
+              <li>SQL</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h2>Author of</h2>
+            <ul>
+              <li><a href="#">Authomatic</a></li>
+              <li><a href="#">Image Metadata Cruncher</a></li>
+              <li><a href="#">Attachment Cruncher</a></li>
+              <li><a href="#">Description 2 Caption</a></li>
+              <li><a href="#">Foundation Sphinx Theme</a></li>
+              <li><a href="#">Liveandletdie</a></li>
+              <li><a href="#">Chromedriver Installer</a></li>
+              <li><a href="#">Google App Engine Installer</a></li>
+            </ul>
+          </div>
+        </div>
+        <h2>You can find me on</h2>
+        <p>
+          <a href="">GitHub</a>,
+          <a href="">Twitter</a>,
+          <a href="">LinkedIn</a>,
+          <a href="">Stackoverflow</a>
+        </p>
+
       </div>
     </noscript>
 
