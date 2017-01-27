@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">
     <title>Document</title>
 
     <link rel="stylesheet"
@@ -72,9 +72,6 @@
       .row::after {
         clear:both;
       }
-      .row {
-        zoom:1; /* For IE 6/7 (trigger hasLayout) */
-      }
 
       .col {
         float: left;
@@ -92,8 +89,22 @@
         }
       }
 
+      .browser-admonition {
+        background-color: pink;
+        padding: 1em;
+        margin: 0;
+      }
+
+      svg {
+        max-height: 11em;
+        max-width: 80%;
+        margin: 3em auto 0;
+      }
+
     </style>
+    <!--[if gt IE 11]><!-->
     <noscript>
+    <!--<![endif]-->
       <style>
 
         body {
@@ -117,13 +128,48 @@
         }
 
       </style>
+    <!--[if gt IE 11]><!-->
     </noscript>
+    <!--<![endif]-->
   </head>
   <body>
-    <noscript>
-      <h1>Peter Hudec</h1>
+    <!--[if IE]>
+    <p class="browser-admonition">
+      You would enjoy this website much more on a any browser
+      other than Internet Explorer.
+    </p>
+    <![endif]-->
+
+    <!--[if gt IE 11]><!-->
+    <noscript id="logo">
+    <!--<![endif]-->
+      <svg xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 29 11">
+        <desc>
+          <h1>Peter Hudec</h1>
+        </desc>
+        <path x="100" y="100"
+          fill="black"
+          d="
+            M0,0 h5,0 v0,3 h-4,0 v0,2 h-1,0 v0,-3 h4,0 v0,-1 h0,-4
+            M6,0 h5,0 v0,1 h-5,0  M6,2 h5,0 v0,1 h-5,0  M6,4 h5,0 v0,1 h-5,0
+            M12,0 h5,0 v0,1 h-2,0 v0,4 h0,-1 v0,-4 h-2,0
+            M18,0 h5,0 v0,1 h-5,0  M18,2 h5,0 v0,1 h-5,0  M18,4 h5,0 v0,1 h-5,0
+            M24,0 h5,0 v0,1 h-4,0 v0,4 h0,-1
+
+            M0,6 h1,0 v0,2 h4,0 v0,3 h-1,0 v0,-2 h-3,0 v0,2 h-1,0
+            M6,6 h1,0 v0,4 h3,0 v0,-4 h1,0 v0,5 h-5,0
+            M12,6 m4,0 h1,0 v0,3 h-4,0 v0,1 h4,0 v0,1 h-5,0 v0,-3 h4,0
+            M18,6 h5,0 v0,1 h-5,0  M18,8 h5,0 v0,1 h-5,0  M18,10 h5,0 v0,1 h-5,0
+            M24,6 h5,0 v0,1 h-4,0 v0,3 h4,0 v0,1 h-5,0"></path>
+      </svg>
+    <!--[if gt IE 11]><!-->
     </noscript>
+    <!--<![endif]-->
+
+    <!--[if gt IE 11]><!-->
     <noscript id="content">
+    <!--<![endif]-->
       <div id="content-container">
         <h1>Tackling Challenges Since 1979</h1>
         <p>
@@ -132,7 +178,7 @@
           I'm a full-stack software engineer with focus on front-end and UI.
           I very much like <em>functional</em> and <em>reactive functional</em>
           programming, which concepts I try to apply where possible
-          (not on this webpage though).
+          (not on this website though).
           Currently I'm in progress of learning ELM and Clojure.
         </p>
         <p>
@@ -179,8 +225,11 @@
         </div>
 
       </div>
+    <!--[if gt IE 11]><!-->
     </noscript>
+    <!--<![endif]-->
 
+    <!--[if gt IE 11]><!-->
     <!-- For fast development -->
     <script src="node_modules/three/build/three.js" charset="utf-8"></script>
     <script src="node_modules/css3drenderer/CSS3Drenderer-browser.js" charset="utf-8"></script>
@@ -192,5 +241,6 @@
     <script src="build/bundle.js" charset="utf-8"></script>
 
     <div id="scroll-dummy"></div>
+    <!--<![endif]-->
   </body>
 </html>
