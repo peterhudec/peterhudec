@@ -41,9 +41,8 @@ export const app = () => {
   // Configuration
   const cubeSize = 0.1
 
-  const scrollCubeSize = cubeSize * 0.25
-  const scrollLabelY = cubeSize * -35
-  const scrollLabelZ = cubeSize * -80
+  const scrollPromptY = cubeSize * -15
+  const scrollPromptZ = cubeSize * -11
 
   const cameraFOV = 30
   const cameraDistance = 11
@@ -122,10 +121,6 @@ export const app = () => {
   lightRing.position.z = -lightDistance
   cameraGroup.add(lightRing)
 
-  const scrollLabel = new THREE.Group()
-  addCubes(scrollLabel, scrollMessage, scrollCubeSize)
-  scrollLabel.position.set(0, scrollLabelY, scrollLabelZ)
-  group.add(scrollLabel)
 
   // Content
   const objectScale = contentScale / contentFontFactor
@@ -160,10 +155,39 @@ export const app = () => {
         .get(0)))
 
 
+  // Scroll prompt
+  const scrollPromptGroup = new THREE.Group()
+  scrollPromptGroup.position.y = scrollPromptY
+  scrollPromptGroup.position.z = scrollPromptZ
+
+  const $scrollPrompt = $('<div><h4>Scroll!<br/><span>&#x27B8;</span></h4></div>')
+    .css('font-size', contentFontFactor + 'em')
+    .css('text-align', 'center')
+  $scrollPrompt.find('span')
+      .css('display', 'inline-block')
+      .css('transform', 'rotateZ(90deg)')
+  const scrollPrompt = new THREE.CSS3DObject($scrollPrompt.get(0))
+  scrollPrompt.scale.set(objectScale, objectScale, objectScale)
+  scrollPromptGroup.add(scrollPrompt)
+
+  const $scrollPromptBackface = $('<div></div>')
+    .css('font-size', contentFontFactor + 'em')
+    .css('background-color', 'white')
+    .css('width', 200)
+    .css('height', '2.2em')
+  const scrollPromptBackface = new THREE.CSS3DObject($scrollPromptBackface.get(0))
+  scrollPromptBackface.position.z = -0.01
+  scrollPromptBackface.rotation.x = Math.PI / -64
+  scrollPromptBackface.scale.set(objectScale, objectScale, objectScale)
+  scrollPromptGroup.add(scrollPromptBackface)
+
+  group.add(scrollPromptGroup)
+
+  // Starting values for animations
   logoTopGroup.position.x = 6
   logoBottomGroup.position.x = -6
-  scrollLabel.position.y = scrollLabelY - 10
-  
+  scrollPromptGroup.position.z = scrollPromptZ - 10
+
   function render() {
     // Quaternion animations taken from this example.
     // http://jsfiddle.net/DLta8/143/
@@ -183,7 +207,6 @@ export const app = () => {
       .setFromEuler(new THREE.Euler(cameraRotationX, cameraRotationY, 0, 'XYZ'))
     cameraGroup.quaternion.slerp(cameraQuaternion, 0.07)
 
-
     const logoTopGroupPosition = logoTopGroup.position.clone()
     logoTopGroupPosition.x = 0
     logoTopGroup.position.lerp(logoTopGroupPosition, 0.07)
@@ -192,9 +215,9 @@ export const app = () => {
     logoBottomGroupPosition.x = 0
     logoBottomGroup.position.lerp(logoBottomGroupPosition, 0.07)
 
-    const scrollLabelPosition = scrollLabel.position.clone()
-    scrollLabelPosition.y = scrollLabelY
-    scrollLabel.position.lerp(scrollLabelPosition, 0.07)
+    const scrollPromptGroupPosition = scrollPromptGroup.position.clone()
+    scrollPromptGroupPosition.z = scrollPromptZ
+    scrollPromptGroup.position.lerp(scrollPromptGroupPosition, 0.07)
 
     webGLRenderer.render(scene, camera)
     cssRenderer.render(scene, camera)
@@ -233,6 +256,14 @@ export const app = () => {
     } else {
       $contentBackface.show()
       $CSSViewport.css('z-index', -1000)
+    }
+
+    if (scrollRotation < Math.PI / -2 + 0.16) {
+      $scrollPrompt.hide()
+      $scrollPromptBackface.hide()
+    } else {
+      $scrollPrompt.show()
+      $scrollPromptBackface.show()
     }
   }
 

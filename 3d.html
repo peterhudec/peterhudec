@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Averia+Serif+Libre:300|Roboto+Slab:100,300,400" rel="stylesheet">
-
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Averia+Serif+Libre:300|Roboto+Slab:100,300,400">
 
     <style media="screen">
 
@@ -25,10 +25,6 @@
 
       strong {
         font-weight: 400;
-      }
-
-      p {
-        text-align: justify;
       }
 
       a,
@@ -62,13 +58,31 @@
         -webkit-transform: translateZ(3em);
       }
 
-      #scroll-dummy {
-        height: 1500px;
+      a:active {
+        transform: translateZ(-3em);
+        -webkit-transform: translateZ(-3em);
+      }
+
+      /* Clearfix */
+      .row::before,
+      .row::after {
+        content:"";
+        display:table;
+      }
+      .row::after {
+        clear:both;
+      }
+      .row {
+        zoom:1; /* For IE 6/7 (trigger hasLayout) */
       }
 
       .col {
         float: left;
         width: 50%;
+      }
+
+      #scroll-dummy {
+        height: 1500px;
       }
 
       @media only screen and (max-width: 550px) {
@@ -111,15 +125,15 @@
     </noscript>
     <noscript id="content">
       <div id="content-container">
-        <!-- <h1>Dealing With It Since 1979</h1> -->
         <h1>Tackling Challenges Since 1979</h1>
         <p>
           Hi, my name is <strong>Peter Hudec</strong>
           (in case you couldn't read the logo).
-          I'm a full-stack software engineer with focus on fron-end and UI.
+          I'm a full-stack software engineer with focus on front-end and UI.
           I very much like <em>functional</em> and <em>reactive functional</em>
-          programming, which concepts I try to apply where possible.
-          I'm also learning ELM and Clojure.
+          programming, which concepts I try to apply where possible
+          (not on this webpage though).
+          Currently I'm in progress of learning ELM and Clojure.
         </p>
         <p>
           I should perhaps mention that I was a
@@ -155,13 +169,14 @@
             </ul>
           </div>
         </div>
-        <h2>You can find me on</h2>
-        <p>
-          <a href="">GitHub</a>,
-          <a href="">Twitter</a>,
-          <a href="">LinkedIn</a>,
-          <a href="">Stackoverflow</a>
-        </p>
+        <div style="text-align: center">
+          <h2>You Can Find Me On</h2>
+          <a href="">peterhudec@peterhudec.com</a><br>
+          <a href="">Stackoverflow</a><br>
+          <a href="">LinkedIn</a><br>
+          <a href="">Twitter</a><br>
+          <a href="">GitHub</a><br>
+        </div>
 
       </div>
     </noscript>
