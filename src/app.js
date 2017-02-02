@@ -1,3 +1,4 @@
+import THREE from 'three'
 import $ from 'jquery'
 
 import * as lights from './lights'

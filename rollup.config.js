@@ -5,9 +5,13 @@ import commonJs from 'rollup-plugin-commonjs'
 import uglify from 'rollup-plugin-uglify'
 import filesize from 'rollup-plugin-filesize'
 
+
 export default {
   entry: 'src/main.js',
   format: 'iife',
+  globals: {
+    three: 'THREE',
+  },
   plugins: [
     babel({
       exclude: 'node_modules/**'
@@ -32,6 +36,7 @@ export default {
 
   external: [
     'three',
-    'css3drenderer'
+    'css3drenderer',
+    // 'jquery',
   ]
 }

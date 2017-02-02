@@ -1,3 +1,5 @@
+import THREE from 'three'
+
 
 const glossyMaterial = new THREE.MeshPhongMaterial({
     color: 0xffffff,
