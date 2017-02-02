@@ -40,8 +40,12 @@ export const app = () => {
   // Configuration
   const cubeSize = 0.1
 
+  const logoTopGroupInitialX = 6
+  const logoBottomGroupInitialX = -6
+
   const scrollPromptY = cubeSize * -15
   const scrollPromptZ = cubeSize * -11
+  const scrollPromptInitialY = scrollPromptY - 10
 
   const cameraFOV = 30
   const cameraDistance = 11
@@ -100,19 +104,26 @@ export const app = () => {
   const group = new THREE.Group()
   scene.add(group)
 
-
   const logoGroup = new THREE.Group()
   logoGroup.rotation.x = Math.PI / 2
   group.add(logoGroup)
-  // addCubes(logoGroup, logo, cubeSize)
 
   const logoTopGroup = new THREE.Group()
-  logoTopGroup.position.set(0, cubeSize * 6, cubeSize * -6)
+  logoTopGroup.position.set(
+    logoTopGroupInitialX,
+    cubeSize * -3,
+    cubeSize * 3
+  )
+
   addCubes(logoTopGroup, topNameCubes, cubeSize)
   logoGroup.add(logoTopGroup)
 
   const logoBottomGroup = new THREE.Group()
-  logoTopGroup.position.set(0, cubeSize * -6, cubeSize * 6)
+  logoBottomGroup.position.set(
+    logoBottomGroupInitialX,
+    cubeSize * 3,
+    cubeSize * -3
+  )
   addCubes(logoBottomGroup, bottomNameCubes, cubeSize)
   logoGroup.add(logoBottomGroup)
 
@@ -149,14 +160,13 @@ export const app = () => {
           .css('position', 'absolute')
           .css('width', '100%')
           .css('font-size', contentFontFactor + 'em')
-          // .css('font-size', '1.5em')
           .html($('#content').text()))
         .get(0)))
 
 
   // Scroll prompt
   const scrollPromptGroup = new THREE.Group()
-  scrollPromptGroup.position.y = scrollPromptY
+  scrollPromptGroup.position.y = scrollPromptInitialY
   scrollPromptGroup.position.z = scrollPromptZ
 
   const $scrollPrompt = $('<div><h4>Scroll!<br/><span>&#x27B8;</span></h4></div>')
@@ -182,10 +192,6 @@ export const app = () => {
 
   group.add(scrollPromptGroup)
 
-  // Starting values for animations
-  logoTopGroup.position.x = 6
-  logoBottomGroup.position.x = -6
-  scrollPromptGroup.position.z = scrollPromptZ + 10
 
   function render() {
     // Quaternion animations taken from this example.
@@ -215,7 +221,7 @@ export const app = () => {
     logoBottomGroup.position.lerp(logoBottomGroupPosition, 0.07)
 
     const scrollPromptGroupPosition = scrollPromptGroup.position.clone()
-    scrollPromptGroupPosition.z = scrollPromptZ
+    scrollPromptGroupPosition.y = scrollPromptY
     scrollPromptGroup.position.lerp(scrollPromptGroupPosition, 0.07)
 
     webGLRenderer.render(scene, camera)
