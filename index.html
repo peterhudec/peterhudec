@@ -89,10 +89,26 @@
         height: 1500px;
       }
 
+      @media only screen and (max-width: 850px) {
+        #scroll-dummy {
+          height: 1700px;
+        }
+      }
+
       @media only screen and (max-width: 550px) {
         .col {
           float: none;
           width: auto;
+        }
+
+        #scroll-dummy {
+          height: 1900px;
+        }
+      }
+
+      @media only screen and (max-width: 300px) {
+        #scroll-dummy {
+          height: 2100px;
         }
       }
 
@@ -250,15 +266,13 @@
     <!--<![endif]-->
 
     <!--[if gt IE 11]><!-->
-    <!-- For fast development -->
+    <!-- Development -->
     <script src="node_modules/three/build/three.js" charset="utf-8"></script>
     <script src="node_modules/css3drenderer/CSS3Drenderer-browser.js" charset="utf-8"></script>
-
-
-    <script src="node_modules/three/examples/js/renderers/CanvasRenderer.js" charset="utf-8"></script>
-
-    <!-- Only production bundle will contain the above dependencies. -->
     <script src="build/bundle.js" charset="utf-8"></script>
+
+    <!-- Production -->
+    <!-- <script src="gcc.js" charset="utf-8"></script> -->
 
     <div id="scroll-dummy"></div>
     <!--<![endif]-->
