@@ -1,12 +1,10 @@
-import THREE from 'three'
+import * as THREE from 'three-with-css3-renderer'
 import $ from 'jquery'
 
 import * as lights from './lights'
 
 import {topNameCubes} from './cubes/top-name'
 import {bottomNameCubes} from './cubes/bottom-name'
-
-import {scrollMessage} from './cubes/scroll'
 import {addCubes} from './cubes/utils'
 
 
@@ -187,7 +185,7 @@ export const app = () => {
   // Starting values for animations
   logoTopGroup.position.x = 6
   logoBottomGroup.position.x = -6
-  scrollPromptGroup.position.z = scrollPromptZ - 10
+  scrollPromptGroup.position.z = scrollPromptZ + 10
 
   function render() {
     // Quaternion animations taken from this example.

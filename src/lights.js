@@ -1,3 +1,5 @@
+import * as THREE from 'three'
+
 
 export const ring = (n, r, color, showBulbs) => {
   const group = new THREE.Group()

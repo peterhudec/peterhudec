@@ -1,0 +1,12 @@
+{
+  "name": "three-with-css3-renderer",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "dependencies": {
+    "three": "0.83.0"
+  },
+  "author": "Peter Hudec",
+  "license": "ISC"
+}
