@@ -29,6 +29,10 @@
         font-weight: 100;
       }
 
+      p {
+        text-align: justify;
+      }
+
       h1, h2, h3, h4, h5, h6 {
         font-family: 'Averia Serif Libre', serif;
         font-weight: 300;
@@ -36,6 +40,10 @@
 
       strong {
         font-weight: 400;
+      }
+
+      .nowrap {
+        white-space: nowrap;
       }
 
       a,
@@ -198,7 +206,9 @@
         <p>
           Hi, my name is <strong>Peter Hudec</strong>
           (in case you couldn't read the logo).
-          I'm a full-stack software engineer with focus on front-end and UI.
+          I'm a <span class="nowrap">full-stack</span>
+          software engineer with focus on
+          <span class="nowrap">front-end</span> and UI.
           I very much like <em>functional</em> and <em>reactive functional</em>
           programming, which concepts I try to apply where possible
           (not on this website though).
@@ -266,5 +276,15 @@
     <div id="scroll-dummy"></div>
     <script src="bundle.js" charset="utf-8"></script>
     <!--<![endif]-->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-29019724-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
   </body>
 </html>

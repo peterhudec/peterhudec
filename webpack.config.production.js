@@ -25,6 +25,7 @@ config.plugins = [
     minify: {
       collapseWhitespace: true,
       collapseInlineTagWhitespace: true,
+      conservativeCollapse: true,
       customAttrCollapse: /(content|d)/,
       minifyCSS: true,
     },
