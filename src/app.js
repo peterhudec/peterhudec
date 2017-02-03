@@ -1,8 +1,8 @@
 import * as THREE from 'three-with-css3-renderer'
 import $ from 'jquery'
 
+import 'file-loader?name=favicon.ico!./favicon.ico'
 import * as lights from './lights'
-
 import {topNameCubes} from './cubes/top-name'
 import {bottomNameCubes} from './cubes/bottom-name'
 import {addCubes} from './cubes/utils'
