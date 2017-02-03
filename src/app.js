@@ -56,7 +56,7 @@ export const app = () => {
   const lightColor = 0xffffff
 
   const contentFontFactor = 2
-  const contentScale = 0.01
+  const contentScale = 0.009
 
 
   // Global variables

@@ -94,29 +94,35 @@
       }
 
       #scroll-dummy {
-        height: 1500px;
+        height: 1300px;
       }
 
-      @media only screen and (max-width: 850px) {
+      @media only screen and (max-width: 880px) {
+        #scroll-dummy {
+          height: 1550px;
+        }
+
+        .col {
+          float: none;
+          width: auto;
+        }
+      }
+
+      @media only screen and (max-width: 600px) {
         #scroll-dummy {
           height: 1700px;
         }
       }
 
-      @media only screen and (max-width: 550px) {
-        .col {
-          float: none;
-          width: auto;
-        }
-
+      @media only screen and (max-width: 500px) {
         #scroll-dummy {
-          height: 1900px;
+          height: 1850px;
         }
       }
 
-      @media only screen and (max-width: 300px) {
+      @media only screen and (max-width: 400px) {
         #scroll-dummy {
-          height: 2100px;
+          height: 2000px;
         }
       }
 
