@@ -11,6 +11,7 @@ import {addCubes} from './cubes/utils'
 const createRendererElement = renderer =>
   $('<div>')
     .css('position', 'fixed')
+    .css('pointer-events', 'none')
     .css('left', 0)
     .css('right', 0)
     .css('height', '100%')
