@@ -24,9 +24,14 @@
 
     <style media="screen">
 
+      html,
       body {
+        height: 100%;
         margin: 0;
         padding: 0;
+      }
+
+      body {
         font-family: 'Roboto Slab', "Palatino Linotype", "Book Antiqua", Palatino, serif;
         font-weight: 100;
       }
@@ -97,7 +102,7 @@
       }
 
       #scroll-dummy {
-        background-color: lime;
+        padding: 1em;
         max-height: 1800px;
         max-width: 1100px;
         overflow-y: hidden;
@@ -137,7 +142,7 @@
           text-align: left;
           margin: auto;
           max-width: 800px;
-          padding: 2em;
+          /*padding: 2em;*/
         }
 
         #scroll-dummy {
@@ -264,7 +269,7 @@
       </div>
     <!--[if gt IE 11]><!-->
     </noscript>
-    <div id="scroll-dummy"></div>
+    <div id="scroll-dummy">x</div>
     <script src="bundle.js" charset="utf-8"></script>
     <!--<![endif]-->
     <script>

@@ -56,8 +56,8 @@ export const app = () => {
   const lightRadius = 5
   const lightColor = 0xffffff
 
-  const contentFontFactor = 2
-  const contentScale = 0.009
+  const contentFontFactor = 4
+  const contentScale = 0.005
 
 
   // Global variables
@@ -134,7 +134,8 @@ export const app = () => {
 
 
   // Content
-  const objectScale = contentScale / contentFontFactor
+  // const objectScale = contentScale / contentFontFactor
+  const objectScale = contentScale
 
   const contentGroup = new THREE.Group()
   contentGroup.position.y = cubeSize * -20
@@ -162,7 +163,7 @@ export const app = () => {
         $('<div>')
           .css('position', 'absolute')
           .css('width', '100%')
-          .css('font-size', contentFontFactor + 'em')
+          .css('font-size', contentFontFactor + 'vh')
           .html($content.text()))
         .get(0)))
 
@@ -174,7 +175,7 @@ export const app = () => {
   scrollPromptGroup.position.z = scrollPromptZ
 
   const $scrollPrompt = $('<div><h4>Scroll!<br/><span>&#x27B8;</span></h4></div>')
-    .css('font-size', contentFontFactor + 'em')
+    .css('font-size', contentFontFactor + 'vh')
     .css('text-align', 'center')
   $scrollPrompt.find('span')
       .css('display', 'inline-block')
@@ -184,7 +185,7 @@ export const app = () => {
   scrollPromptGroup.add(scrollPrompt)
 
   const $scrollPromptBackface = $('<div></div>')
-    .css('font-size', contentFontFactor + 'em')
+    .css('font-size', contentFontFactor + 'vh')
     .css('background-color', 'white')
     .css('width', 200)
     .css('height', '2.2em')
