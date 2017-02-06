@@ -154,6 +154,8 @@ export const app = () => {
   contentBackface.position.set(0, 0, -1)
   contentGroup.add(contentBackface)
 
+  const $content = $('#content')
+
   contentGroup.add(
     new THREE.CSS3DObject(
       wrapContentElement(
@@ -161,9 +163,10 @@ export const app = () => {
           .css('position', 'absolute')
           .css('width', '100%')
           .css('font-size', contentFontFactor + 'em')
-          .html($('#content').text()))
+          .html($content.text()))
         .get(0)))
 
+  const $scrollDummy = $('#scroll-dummy').html($content.text())
 
   // Scroll prompt
   const scrollPromptGroup = new THREE.Group()
@@ -246,6 +249,7 @@ export const app = () => {
     webGLRenderer.render(scene, camera)
     cssRenderer.render(scene, camera)
 
+    $scrollDummy.css('font-size', $('#content-container').css('font-size'))
 
     camera.updateProjectionMatrix()
   }
@@ -311,6 +315,10 @@ export const app = () => {
       })
     }
   }
+
+
+
+  // $('#scroll-dummy').html($('#content').text())
 
   onResize()
   onScroll()
