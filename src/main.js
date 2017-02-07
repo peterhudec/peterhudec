@@ -1,3 +1,6 @@
+import 'file-loader?name=favicon.ico!./favicon.ico'
+import 'file-loader?name=preview.jpg!./preview.jpg'
+
 import $ from 'jquery'
 import Detector from 'three/examples/js/Detector'
 
