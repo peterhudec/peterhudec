@@ -12,8 +12,8 @@ config.plugins = [
       language_out: 'ECMASCRIPT5',
       output_wrapper:
         "/**\n" +
-        " * If you are curious you can see the source at\n" +
-        " * https://github.com/peterhudec/peterhudec.com\n" +
+        " * If you are curious you can see the source at:\n" +
+        " * https://github.com/peterhudec/peterhudec\n" +
         " */\n" +
         '%output%'
     },
