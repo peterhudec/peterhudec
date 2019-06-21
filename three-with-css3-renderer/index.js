@@ -142,6 +142,7 @@ THREE.CSS3DRenderer = function () {
 	};
 
 	var renderObject = function ( object, camera ) {
+		var style
 
 		if ( object instanceof THREE.CSS3DObject ) {
 
