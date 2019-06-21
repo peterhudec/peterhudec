@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "production": "webpack --config webpack.config.production.js",
-    "watch": "webpack-dev-server"
+    "start": "webpack-dev-server"
   },
   "author": "",
   "license": "ISC",
