@@ -1,10 +1,12 @@
-var ClosureCompilerPlugin = require('webpack-closure-compiler')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path')
+const ClosureCompilerPlugin = require('webpack-closure-compiler')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-var config = require('./webpack.config')
+const config = require('./webpack.config')
 
 
 config.devtool = false
+config.output.path = path.resolve(__dirname, 'peterhudec.github.io')
 config.plugins = [
   new ClosureCompilerPlugin({
     compiler: {

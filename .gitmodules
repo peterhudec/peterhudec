@@ -1,0 +1,4 @@
+[submodule "peterhudec.github.io"]
+	path = peterhudec.github.io
+	url = git@github.com:peterhudec/peterhudec.github.io.git
+	ignore = all

@@ -14,9 +14,13 @@ The app is built with [Webpack](https://webpack.github.io/).
 
 There are three NPM commands:
 
-* `npm run watch` For development with
+* `npm start` Starts the
   [Webpack Dev Server](https://webpack.github.io/docs/webpack-dev-server.html).
 * `npm run build` Builds the development version.
 * `npm run production` Builds the production version with
   [Closure Compiler](https://developers.google.com/closure/compiler/).
-  
+* `npm run deploy` Builds the production version and deploys it by commiting
+  it to the `master` branch of the
+  [peterhudec.github.io](https://github.com/peterhudec/peterhudec.github.io)
+  repository which is my GitHub
+  [user page](https://help.github.com/en/articles/user-organization-and-project-pages#user-and-organization-pages-sites).
